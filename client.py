@@ -3,6 +3,9 @@
 import socket
 import StringIO
 
+import astropy.io.fits.header
+import astropy.io.fits
+
 HOSTNAME = 'localhost'
 PORT = 2013
 
@@ -25,7 +28,8 @@ def main():
     socket_.connect((HOSTNAME, PORT))
     length = int(getbytes(socket_, 4))
     payload = getbytes(socket_, length)
-    print payload
+    fits_ding = astropy.io.fits.PrimaryHDU()
+    fits_ding.header = astropy.io.fits.header.Header.fromstring(payload)
 
 if __name__ == '__main__':
     main()
